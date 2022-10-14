@@ -69,7 +69,7 @@ const operatorTranslations: {
   or: Op.or,
 };
 
-class SequelizeBase<
+export class SequelizeRepository<
   T extends Entity,
   ID,
   Relations extends object = {},
@@ -203,16 +203,14 @@ class SequelizeBase<
     }
   }
 
-  async count(where?: Where<T>, options?: AnyObject): Promise<Count> {
-    console.log('other options', options);
-
+  /* async count(where?: Where<T>, options?: AnyObject): Promise<Count> {
     const count = await this.sequelizeModel.count({
       ...(where ? {where: this.buildSequelizeWhere<T>(where)} : {}),
-      // ...options,
+      ...options,
     });
 
     return {count};
-  }
+  } */
 
   private getSequelizeOperator(key: keyof typeof operatorTranslations) {
     const sequelizeOperator = operatorTranslations[key];
@@ -382,5 +380,3 @@ class SequelizeBase<
     return sequelizeDefinition;
   }
 }
-
-export default SequelizeBase;

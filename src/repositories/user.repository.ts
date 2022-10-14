@@ -1,9 +1,9 @@
 import {inject} from '@loopback/core';
 import {PgsqlDataSource} from '../datasources';
 import {User, UserRelations} from '../models';
-import SequelizeBase from './sequelize.repository.base';
+import {SequelizeRepository} from './sequelize.repository.base';
 
-export class UserRepository extends SequelizeBase<
+export class UserRepository extends SequelizeRepository<
   User,
   typeof User.prototype.id,
   UserRelations
