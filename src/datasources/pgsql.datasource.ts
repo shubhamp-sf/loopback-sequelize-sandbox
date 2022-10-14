@@ -1,41 +1,16 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
-import {juggler} from '@loopback/repository';
-import {Sequelize} from 'sequelize';
+import {SequelizeDS} from './sequelize/sequelize.datasource.base';
+import {DatasourceConfig} from './sequelize/types';
 
-const config = {
+const config: DatasourceConfig = {
   name: 'pgsql',
   connector: 'postgresql',
   host: 'localhost',
   port: 5999,
-  user: 'postgres',
+  username: 'postgres',
   password: 'rest-rest',
   database: 'postgres',
 };
-
-export class SequelizeDS extends juggler.DataSource {
-  sequelize?: Sequelize;
-  async init() {
-    console.log('init called');
-    this.sequelize = new Sequelize({
-      host: config.host,
-      port: config.port,
-      database: config.database,
-      dialect: 'postgres',
-      username: config.user,
-      password: config.password,
-      logging: console.log,
-    });
-    try {
-      await this.sequelize.authenticate();
-      console.log('Connection has been established successfully.');
-    } catch (error) {
-      console.error('Unable to connect to the database:', error);
-    }
-  }
-  stop() {
-    this.sequelize?.close?.().catch(console.log);
-  }
-}
 
 // Observe application's life cycle to disconnect the datasource when
 // application is stopped. This allows the application to be shut down

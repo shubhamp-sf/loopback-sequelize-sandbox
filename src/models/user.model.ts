@@ -25,6 +25,8 @@ export class User extends Entity {
   })
   age?: number;
 
+  @property()
+  active?: boolean;
 
   constructor(data?: Partial<User>) {
     super(data);
